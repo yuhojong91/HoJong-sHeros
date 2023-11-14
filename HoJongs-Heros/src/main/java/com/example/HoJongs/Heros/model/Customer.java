@@ -1,5 +1,7 @@
 package com.example.HoJongs.Heros.model;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
@@ -8,6 +10,8 @@ import java.util.Set;
 @Entity
 public class Customer {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer Id; 
     private String phone_number;
     private String name;
     private String address;
@@ -15,8 +19,8 @@ public class Customer {
     private String state;
     private Integer zip_code;
     //    //mappedBy attribute in @OneToMany is used to specify the field in the child entity that owns the relationship.
-    @OneToMany(mappedBy = "phone_number")
-    private Set<CustomerOrder> orders;
+    // @OneToMany(mappedBy = "phone_number")
+    // private Set<CustomerOrder> orders;
     public Customer(){
     }
 
