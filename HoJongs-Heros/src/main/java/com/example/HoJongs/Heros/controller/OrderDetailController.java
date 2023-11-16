@@ -9,10 +9,9 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -31,14 +30,14 @@ public class OrderDetailController {
             Long customerOrderId = orderDetail.getOrderId();
             CustomerOrder customerOrder = customerOrderRepository.getReferenceById(customerOrderId); // Extract CustomerOrder affiliated with order detail
             orderDetail.setOrder(customerOrder); // Set Order in orderDetail to affiliated order
-        } catch (EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
         try {
             Long productId = orderDetail.getProductId();
             Product product = productRepository.getReferenceById(productId); // Extract Product affiliated with order detail
             orderDetail.setProduct(product); // set Product in orderDetail to affiliated product
-        } catch (EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
         orderDetail.setPrice(orderDetail.getQuantity() * orderDetail.getProduct().getPrice() * (1 - orderDetail.getDiscount())); // generate price from product and quantity
@@ -47,4 +46,11 @@ public class OrderDetailController {
         customerOrderRepository.save(order);
         OrderDetail newOrderDetail = orderDetailRepository.save(orderDetail); // save orderDetail to repository
         return ResponseEntity.ok().body(newOrderDetail);
+    }
+
+    @GetMapping("/order_detail")
+    public ResponseEntity<?> fetchOrderDetails() {
+        List<OrderDetail> orderDetails = orderDetailRepository.findAll();
+        return ResponseEntity.ok().body(orderDetails);
+    }
 }
