@@ -38,6 +38,14 @@
          this.product_id = product_id;
      }
 
+     public OrderDetail(BigInteger quantity, Long order_id, Long product_id) { //Product product removed from constructor for testing
+         this.quantity = quantity;
+         this.discount = 0;
+         this.price = 0;
+         this.order_id = order_id;
+         this.product_id = product_id;
+     }
+
      public Long getId() { return Id; }
 
      public Long getOrderId() { return order_id; }

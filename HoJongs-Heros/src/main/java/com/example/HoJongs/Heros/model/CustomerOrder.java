@@ -23,7 +23,7 @@
      private Set<OrderDetail> orderDetails;
 
 //     @ManyToOne
-//     @JoinColumn(name = "employee_id", referencedColumnName)
+//     @JoinColumn(name = "employee_id", referencedColumnName = "Id")
 //     private Employee employee;
 
      public CustomerOrder(){

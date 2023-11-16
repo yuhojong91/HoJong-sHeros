@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -51,6 +52,12 @@ public class OrderDetailController {
     @GetMapping("/order_detail")
     public ResponseEntity<?> fetchOrderDetails() {
         List<OrderDetail> orderDetails = orderDetailRepository.findAll();
+        return ResponseEntity.ok().body(orderDetails);
+    }
+
+    @GetMapping("/order_detail/{id}")
+    public ResponseEntity<?> fetchOrderDetailByOrder(@PathVariable("id") Long customerOrderId) {
+        Optional<CustomerOrder> orderDetails = orderDetailRepository.findByOrderId(customerOrderId);
         return ResponseEntity.ok().body(orderDetails);
     }
 }
