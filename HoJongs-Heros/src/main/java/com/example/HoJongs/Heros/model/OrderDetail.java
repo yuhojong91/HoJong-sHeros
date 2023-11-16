@@ -35,7 +35,6 @@
          this.discount = discount;
          this.price = 0;
          this.order_id = order_id;
-         this.product = product;
          this.product_id = product_id;
      }
 
