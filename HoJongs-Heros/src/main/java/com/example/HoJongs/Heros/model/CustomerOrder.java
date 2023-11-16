@@ -1,4 +1,4 @@
- package com.example.HoJongs.Heros.model;
+package com.example.HoJongs.Heros.model;
 
  import jakarta.persistence.*;
 
@@ -38,27 +38,33 @@
          this.employeeId = employeeId;
      }
 
-     public Long getId() {
-         return Id;
-     }
-
     public Long getEmployeeId() { return employeeId; }
 
      public String getPhoneNumber() {
          return phoneNumber;
      }
 
-     public void setPhoneNumber(String phoneNumber) {
-         this.phoneNumber = phoneNumber;
-     }
+    public Long getId() {
+        return Id;
+    }
 
-     public String getDateTime() {
-         return dateTime;
-     }
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 
-     public void setDateTime(String dateTime) {
-         this.dateTime = dateTime;
-     }
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+
+    public String getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
+    }
+
 
      public Double getTotalPrice() {
          return totalPrice;
