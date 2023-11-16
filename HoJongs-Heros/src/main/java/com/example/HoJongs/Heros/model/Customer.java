@@ -19,8 +19,9 @@ public class Customer {
     private String state;
     private Integer zip_code;
     //    //mappedBy attribute in @OneToMany is used to specify the field in the child entity that owns the relationship.
-    // @OneToMany(mappedBy = "phone_number")
-    // private Set<CustomerOrder> orders;
+    @OneToMany(mappedBy = "phone_number")
+    private Set<CustomerOrder> orders;
+    
     public Customer(){
     }
 
