@@ -3,6 +3,8 @@
  import jakarta.persistence.*;
 
  import java.time.LocalDateTime;
+ import java.util.Set;
+
  @Entity
  public class CustomerOrder {
      @Id
@@ -10,7 +12,7 @@
      private Long Id;
      private String phoneNumber;
      private String dateTime;
-     private String totalPrice;
+     private Double totalPrice;
      @Column(insertable=false, updatable=false)
      private Long employeeId;
      //@JoinColumn in @ManyToOne specifies the column used for joining to the referenced entity.
@@ -19,16 +21,20 @@
      @JoinColumn(name = "customer_id", referencedColumnName = "Id")
      private Customer customer;
 
-    @ManyToOne
-    @JoinColumn(name = "employeeId", referencedColumnName = "Id")
-    private Employee employee;
+     @OneToMany(mappedBy = "order")
+     private Set<OrderDetail> orderDetails;
+   
+     @ManyToOne
+     @JoinColumn(name = "employeeId", referencedColumnName = "Id")
+     private Employee employee;
 
      public CustomerOrder(){
      }
-     public CustomerOrder(String phoneNumber, String dateTime, String totalPrice, Long employeeId) {
+   
+     public CustomerOrder(String phoneNumber, String dateTime, Long employeeId) {
          this.phoneNumber = phoneNumber;
          this.dateTime = dateTime;
-         this.totalPrice = totalPrice;
+         this.totalPrice = 0.;
          this.employeeId = employeeId;
      }
 
@@ -54,11 +60,11 @@
          this.dateTime = dateTime;
      }
 
-     public String getTotalPrice() {
+     public Double getTotalPrice() {
          return totalPrice;
      }
 
-     public void setTotalPrice(String totalPrice) {
+     public void setTotalPrice(Double totalPrice) {
          this.totalPrice = totalPrice;
      }
 
