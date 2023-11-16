@@ -32,9 +32,8 @@ public class Customer {
         this.state = state;
         this.zipCode = zipCode;
     }
-
-    public String getId() {
-        return phoneNumber;
+    public Integer getId() {
+        return Id;
     }
 
     public String getPhoneNumber() {
@@ -55,6 +54,30 @@ public class Customer {
 
     public String getState() {
         return state;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 
     public String getZipCode() {
