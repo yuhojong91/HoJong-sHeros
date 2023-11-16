@@ -13,6 +13,8 @@
      private String phoneNumber;
      private String dateTime;
      private Double totalPrice;
+     @Column(insertable=false, updatable=false)
+     private Long employeeId;
      //@JoinColumn in @ManyToOne specifies the column used for joining to the referenced entity.
      //ReferencedColumnName tells Hibernate that this fk column is referring to the 'Id' columnn in the 'Customer' table
      @ManyToOne
@@ -21,22 +23,26 @@
 
      @OneToMany(mappedBy = "order")
      private Set<OrderDetail> orderDetails;
-
-//     @ManyToOne
-//     @JoinColumn(name = "employee_id", referencedColumnName = "Id")
-//     private Employee employee;
+   
+     @ManyToOne
+     @JoinColumn(name = "employeeId", referencedColumnName = "Id")
+     private Employee employee;
 
      public CustomerOrder(){
      }
-     public CustomerOrder(String phoneNumber, String dateTime) {
+   
+     public CustomerOrder(String phoneNumber, String dateTime, Long employeeId) {
          this.phoneNumber = phoneNumber;
          this.dateTime = dateTime;
          this.totalPrice = 0.;
+         this.employeeId = employeeId;
      }
 
      public Long getId() {
          return Id;
      }
+
+    public Long getEmployeeId() { return employeeId; }
 
      public String getPhoneNumber() {
          return phoneNumber;
@@ -64,5 +70,9 @@
 
      public void setCustomer(Customer customer) {
          this.customer = customer;
+     }
+
+    public void setEmployee(Employee employee) {
+         this.employee = employee;
      }
  }
