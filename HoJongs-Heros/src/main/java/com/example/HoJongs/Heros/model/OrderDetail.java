@@ -14,6 +14,8 @@
      @Id
      @GeneratedValue(strategy = GenerationType.IDENTITY)
      private Long Id;
+     private Long order_id;
+     private Long product_id;
      private BigInteger quantity;
      private double discount;
      private double price;
@@ -28,15 +30,22 @@
      public OrderDetail(){
      }
 
-     public OrderDetail(BigInteger quantity, double discount, double price, CustomerOrder order, Product product) {
+     public OrderDetail(BigInteger quantity, double discount, Long order_id, Long product_id) { //Product product removed from constructor for testing
          this.quantity = quantity;
          this.discount = discount;
-         this.price = price;
-         this.order = order;
+         this.price = 0;
+         this.order_id = order_id;
          this.product = product;
+         this.product_id = product_id;
      }
 
      public Long getId() { return Id; }
+
+     public Long getOrderId() { return order_id; }
+     public void setOrderId(Long order_id) {this.order_id = order_id; }
+
+     public Long getProductId() { return product_id; }
+     public void setProductId(Long product_id) {this.product_id = product_id; }
 
      public BigInteger getQuantity() { return quantity; }
      public void setQuantity(BigInteger quantity) { this.quantity = quantity; }
