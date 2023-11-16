@@ -11,34 +11,34 @@ import java.util.Set;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer Id; 
-    private String phone_number;
+    private Integer Id;
+    private String phoneNumber;
     private String name;
     private String address;
     private String city;
     private String state;
-    private Integer zip_code;
-    //    //mappedBy attribute in @OneToMany is used to specify the field in the child entity that owns the relationship.
-    // @OneToMany(mappedBy = "phone_number")
-    // private Set<CustomerOrder> orders;
+    private String zipCode;
+    //mappedBy attribute in @OneToMany is used to specify the field in the child entity that owns the relationship.
+     @OneToMany(mappedBy = "customer")
+     private Set<CustomerOrder> orders;
     public Customer(){
     }
 
-    public Customer(String phone_number, String name, String address, String city, String state, Integer zip_code) {
-        this.phone_number = phone_number;
+    public Customer(String phoneNumber, String name, String address, String city, String state, String zipCode) {
+        this.phoneNumber = phoneNumber;
         this.name = name;
         this.address = address;
         this.city = city;
         this.state = state;
-        this.zip_code = zip_code;
+        this.zipCode = zipCode;
     }
 
     public String getId() {
-        return phone_number;
+        return phoneNumber;
     }
 
-    public String getPhone_number() {
-        return phone_number;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     public String getName() {
@@ -57,7 +57,7 @@ public class Customer {
         return state;
     }
 
-    public Integer getZip_code() {
-        return zip_code;
+    public String getZipCode() {
+        return zipCode;
     }
 }
