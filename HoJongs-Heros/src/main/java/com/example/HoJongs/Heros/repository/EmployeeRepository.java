@@ -9,6 +9,5 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     //Optional is a container object which may or may not contain a non-null value.
     //findByPhoneNumber: The name of the method dictates the query that Spring Data JPA will construct.
     //It implies a query that finds a Customer entity based on the phoneNumber field.
-    Optional<Employee> findById(Long Id);
 }
 

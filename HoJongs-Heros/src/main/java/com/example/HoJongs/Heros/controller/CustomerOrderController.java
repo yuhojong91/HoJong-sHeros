@@ -28,11 +28,14 @@ public class CustomerOrderController {
     public ResponseEntity<?> createCustomerOrder(@RequestBody CustomerOrder customerOrder) {
         try {
             String phoneNumber = customerOrder.getPhoneNumber(); // Extract phoneNumber from the CustomerOrder object
-            Long employeeId = customerOrder.getEmployeeId(); 
-            Employee employee = employeeRepository.findById(employeeId).orElseThrow(() -> new EntityNotFoundException("Employee not found with ID: " + employeeId));
+            Long employeeId = customerOrder.getEmployeeId(); // Extract employeeId from the CustomerOrder object
+            Employee employee = employeeRepository.findById(employeeId)
+                    .orElseThrow(() -> new EntityNotFoundException("Employee not found with ID: " + employeeId));
             customerOrder.setEmployee(employee);
             Customer customer = customerRepository.findByPhoneNumber(phoneNumber) // Then find fk in customer using phoneNumber
                     .orElseThrow(() -> new EntityNotFoundException("Customer not found with phone number: " + phoneNumber)); // throw error
+
+            System.out.println("Reached ");
 
             customerOrder.setCustomer(customer); // Set the customer
             CustomerOrder newCustomerOrder = customerOrderRepository.save(customerOrder);

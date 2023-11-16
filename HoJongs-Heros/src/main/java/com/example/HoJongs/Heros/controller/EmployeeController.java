@@ -38,8 +38,8 @@ public class EmployeeController {
      */
     @PostMapping("/employee")
     public ResponseEntity<Employee> getEmployee(@RequestBody Employee employee) {
-        var newCustomer = employeeRepository.save(employee);
-        return ResponseEntity.ok().body(newCustomer);
+        var newEmployee= employeeRepository.save(employee);
+        return ResponseEntity.ok().body(newEmployee);
  
     }
 }

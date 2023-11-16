@@ -1,11 +1,7 @@
  package com.example.HoJongs.Heros.model;
 
- import jakarta.persistence.Entity;
- import jakarta.persistence.Id;
- import jakarta.persistence.JoinColumn;
- import jakarta.persistence.ManyToOne;
- import jakarta.persistence.GeneratedValue;
- import jakarta.persistence.GenerationType;
+ import jakarta.persistence.*;
+
  import java.time.LocalDateTime;
  @Entity
  public class CustomerOrder {
@@ -15,7 +11,8 @@
      private String phoneNumber;
      private String dateTime;
      private String totalPrice;
-     private Long employeeId; 
+     @Column(insertable=false, updatable=false)
+     private Long employeeId;
      //@JoinColumn in @ManyToOne specifies the column used for joining to the referenced entity.
      //ReferencedColumnName tells Hibernate that this fk column is referring to the 'Id' columnn in the 'Customer' table
      @ManyToOne
@@ -39,9 +36,7 @@
          return Id;
      }
 
-    public Long getEmployeeId() {
-         return employeeId;
-     }
+    public Long getEmployeeId() { return employeeId; }
 
      public String getPhoneNumber() {
          return phoneNumber;
