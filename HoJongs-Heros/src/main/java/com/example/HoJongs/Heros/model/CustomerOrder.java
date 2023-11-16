@@ -48,9 +48,6 @@ package com.example.HoJongs.Heros.model;
         return Id;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
@@ -67,7 +64,13 @@ package com.example.HoJongs.Heros.model;
 
 
      public Double getTotalPrice() {
-         return totalPrice;
+         if (totalPrice == null) {
+             return 0.;
+         }
+         else {
+             return totalPrice;
+         }
+
      }
 
      public void setTotalPrice(Double totalPrice) {
