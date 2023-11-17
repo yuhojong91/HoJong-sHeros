@@ -44,10 +44,11 @@ public class OrderDetailController {
 
             orderDetail.setOrder(customerOrder);
             orderDetail.setProduct(product);
-            orderDetail.setPrice(0.0);
+            Double price = orderDetail.getProduct().getPrice() * orderDetail.getQuantity().doubleValue();
+            orderDetail.setPrice(price);
 
-            System.out.println(product);
-            System.out.println(orderDetail.getProduct());
+            customerOrder.setTotalPrice(customerOrder.getTotalPrice() + price);
+            customerOrderRepository.save(customerOrder);
 
             OrderDetail newOrderDetail = orderDetailRepository.save(orderDetail);
             return ResponseEntity.ok().body(newOrderDetail); // return saved customer
