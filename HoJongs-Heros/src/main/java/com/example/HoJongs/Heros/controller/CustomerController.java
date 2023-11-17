@@ -64,8 +64,4 @@ public class CustomerController {
         }).orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-//    @DeleteMapping("/delete_customer")
-//    public ResponseEntity<Customer> deleteCustomer(@RequestBody Customer customer){
-//
-//    }
 }
