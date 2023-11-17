@@ -49,7 +49,12 @@
       <version>2.2.0</version>
    </dependency>
 	</dependencies>
+<<<<<<< HEAD
 
+
+
+=======
+>>>>>>> 723926cefad69ece2787af658f7223abd76fc431
 	<build>
 		<plugins>
 			<plugin>
