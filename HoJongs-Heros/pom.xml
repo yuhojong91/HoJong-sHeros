@@ -42,7 +42,19 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+      <groupId>org.springdoc</groupId>
+      <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+      <version>2.2.0</version>
+   </dependency>
 	</dependencies>
+<<<<<<< HEAD
+	 
+	
+
+=======
+>>>>>>> 723926cefad69ece2787af658f7223abd76fc431
 	<build>
 		<plugins>
 			<plugin>
@@ -54,6 +66,16 @@
 					</image>
 				</configuration>
 			</plugin>
+
+    <executions>
+        <execution>
+        	<?m2e execute onConfiguration,onIncremental?>
+            <goals>
+                <goal>generate</goal>
+            </goals>
+            <phase>compile</phase>
+        </execution>
+    </executions>
 		</plugins>
 	</build>
 
