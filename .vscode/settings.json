@@ -7,7 +7,13 @@
         "**/.DS_Store": true,
         "**/Thumbs.db": true
     },
+<<<<<<< HEAD
     "hide-files.files": [],
     "java.configuration.updateBuildConfiguration": "automatic",
     "java.compile.nullAnalysis.mode": "disabled",
+=======
+    "hide-files.files": []
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "java.compile.nullAnalysis.mode": "disabled"
+>>>>>>> 723926cefad69ece2787af658f7223abd76fc431
 }

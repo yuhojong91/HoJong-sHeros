@@ -1,40 +1,48 @@
 package com.example.HoJongs.Heros.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+ import jakarta.persistence.*;
 
-@Entity
-public class CustomerOrder {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
-    private String phoneNumber;
-    private String dateTime;
-    private String totalPrice;
-    // @JoinColumn in @ManyToOne specifies the column used for joining to the
-    // referenced entity.
-    // ReferencedColumnName tells Hibernate that this fk column is referring to the
-    // 'Id' columnn in the 'Customer' table
-    @ManyToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "Id")
-    private Customer customer;
+ import java.time.LocalDateTime;
+ import java.util.Set;
 
-    // @ManyToOne
-    // @JoinColumn(name = "employee_id")
-    // private Employee employee;
+ @Entity
+ public class CustomerOrder {
+     @Id
+     @GeneratedValue(strategy = GenerationType.IDENTITY)
+     private Long Id;
+     private String phoneNumber;
+     private String dateTime;
+     private Double totalPrice;
+     @Column(insertable=false, updatable=false)
+     private Long employeeId;
+     //@JoinColumn in @ManyToOne specifies the column used for joining to the referenced entity.
+     //ReferencedColumnName tells Hibernate that this fk column is referring to the 'Id' columnn in the 'Customer' table
+     @ManyToOne
+     @JoinColumn(name = "customer_id", referencedColumnName = "Id")
+     private Customer customer;
 
-    public CustomerOrder() {
-    }
+     @OneToMany(mappedBy = "order")
+     private Set<OrderDetail> orderDetails;
+   
+     @ManyToOne
+     @JoinColumn(name = "employeeId", referencedColumnName = "Id")
+     private Employee employee;
 
-    public CustomerOrder(String phoneNumber, String dateTime, String totalPrice) {
-        this.phoneNumber = phoneNumber;
-        this.dateTime = dateTime;
-        this.totalPrice = totalPrice;
-    }
+     public CustomerOrder(){
+     }
+   
+     public CustomerOrder(String phoneNumber, String dateTime, Long employeeId) {
+         this.phoneNumber = phoneNumber;
+         this.dateTime = dateTime;
+         this.totalPrice = 0.;
+         this.employeeId = employeeId;
+     }
+
+    public Long getEmployeeId() { return employeeId; }
+
+     public String getPhoneNumber() {
+         return phoneNumber;
+     }
 
     public Long getId() {
         return Id;
@@ -48,6 +56,7 @@ public class CustomerOrder {
         this.phoneNumber = phoneNumber;
     }
 
+
     public String getDateTime() {
         return dateTime;
     }
@@ -56,15 +65,20 @@ public class CustomerOrder {
         this.dateTime = dateTime;
     }
 
-    public String getTotalPrice() {
-        return totalPrice;
-    }
 
-    public void setTotalPrice(String totalPrice) {
-        this.totalPrice = totalPrice;
-    }
+     public Double getTotalPrice() {
+         return totalPrice;
+     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-}
+     public void setTotalPrice(Double totalPrice) {
+         this.totalPrice = totalPrice;
+     }
+
+     public void setCustomer(Customer customer) {
+         this.customer = customer;
+     }
+
+    public void setEmployee(Employee employee) {
+         this.employee = employee;
+     }
+ }
