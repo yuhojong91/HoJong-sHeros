@@ -33,7 +33,6 @@ public class Product {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -41,7 +40,6 @@ public class Product {
     public String getDescription() {
         return description;
     }
-
     public void setDescription(String description) {
         this.description = description;
     }
@@ -49,15 +47,15 @@ public class Product {
     public Double getPrice() {
         return price;
     }
-
     public void setPrice(Double price) {
         this.price = price;
     }
 
+    // Andrew - Do we need this? It can be derived from the tables, and it's unlikely that a customer would want to
+    // associate products with orderDetails. The opposite, yes, but this feels redundant
     public Set<OrderDetail> getOrderDetails() {
         return orderDetails;
     }
-
     public void setOrderDetails(Set<OrderDetail> orderDetails) {
         this.orderDetails = orderDetails;
     }

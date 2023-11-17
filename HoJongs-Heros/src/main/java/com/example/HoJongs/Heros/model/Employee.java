@@ -18,36 +18,31 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
     private String name;
-    private boolean is_active;
+    private boolean isActive;
     //mappedBy attribute in @OneToMany is used to specify the field in the child entity that owns the relationship.
 
     @OneToMany(mappedBy = "employee")
-    // @JoinColumn(name = "order_id",referencedColumnName = "Id")
     private Set<CustomerOrder> orders;
 
     public Employee(){
     }
 
-    public Employee(String name, boolean is_active) {
+    public Employee(String name, boolean isActive) {
         this.name = name;
-        this.is_active = is_active;
+        this.isActive = isActive;
     }
 
     public Long getId() {
         return Id;
     }
 
-    public void setId(Long Id){
-        this.Id = Id;
-    }
-
     public String getName() {
         return name;
     }
+    public void setName(String name) { this.name = name; }
 
-    public boolean isIs_active() {
-        return is_active;
+    public boolean getIsActive() {
+        return isActive;
     }
-
-
+    public void setIsActive(boolean isActive) { this.isActive = isActive; }
 }
