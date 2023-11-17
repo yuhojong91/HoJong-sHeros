@@ -32,9 +32,8 @@ public class Customer {
         this.state = state;
         this.zipCode = zipCode;
     }
-
-    public String getId() {
-        return phoneNumber;
+    public Integer getId() {
+        return Id;
     }
 
     public String getPhoneNumber() {

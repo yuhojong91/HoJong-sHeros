@@ -11,4 +11,5 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     //findByPhoneNumber: The name of the method dictates the query that Spring Data JPA will construct.
     //It implies a query that finds a Customer entity based on the phoneNumber field.
     Optional<Customer> findByPhoneNumber(String phoneNumber);
+    Optional<Customer> findById(Integer Id);
 }
