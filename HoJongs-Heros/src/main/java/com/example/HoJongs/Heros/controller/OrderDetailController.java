@@ -3,8 +3,10 @@ package com.example.HoJongs.Heros.controller;
 
 import com.example.HoJongs.Heros.model.CustomerOrder;
 import com.example.HoJongs.Heros.model.OrderDetail;
+import com.example.HoJongs.Heros.model.Product;
 import com.example.HoJongs.Heros.repository.CustomerOrderRepository;
 import com.example.HoJongs.Heros.repository.OrderDetailRepository;
+import com.example.HoJongs.Heros.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,8 @@ public class OrderDetailController {
     private CustomerOrderRepository customerOrderRepository; //Inject CustomerOrderRepository
     @Autowired
     private OrderDetailRepository orderDetailRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
     // <?> return type to allow for different body types (either OrderDetail or an error message).
     @PostMapping("/order_detail")
@@ -41,7 +45,8 @@ public class OrderDetailController {
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
-        orderDetail.setPrice(orderDetail.getQuantity() * orderDetail.getProduct().getPrice() * (1 - orderDetail.getDiscount())); // generate price from product and quantity
+        Double priceTotal = Double.parseDouble(String.format("%.2g%n", orderDetail.getQuantity().doubleValue() * orderDetail.getProduct().getPrice() * (1 - orderDetail.getDiscount())));
+        orderDetail.setPrice(priceTotal); // generate price from product and quantity
         CustomerOrder order = orderDetail.getOrder();
         order.setTotalPrice(order.getTotalPrice() + orderDetail.getPrice());
         customerOrderRepository.save(order);
