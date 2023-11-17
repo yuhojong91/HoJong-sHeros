@@ -11,10 +11,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -44,11 +41,13 @@ public class OrderDetailController {
 
             orderDetail.setOrder(customerOrder);
             orderDetail.setProduct(product);
-            Double price = orderDetail.getProduct().getPrice() * orderDetail.getQuantity().doubleValue();
+            Double price = orderDetail.getProduct().getPrice() * orderDetail.getQuantity().doubleValue(); // Calculates price from product price and quantity
+            price = (double) Math.round(price * 100); // Rounds price to two decimal places
+            price = price / 100;
             orderDetail.setPrice(price);
 
             customerOrder.setTotalPrice(customerOrder.getTotalPrice() + price);
-            customerOrderRepository.save(customerOrder);
+            customerOrderRepository.save(customerOrder); // Add price to total price of associated CustomerOrder
 
             OrderDetail newOrderDetail = orderDetailRepository.save(orderDetail);
             return ResponseEntity.ok().body(newOrderDetail); // return saved customer
@@ -56,5 +55,14 @@ public class OrderDetailController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+
+    @GetMapping("/order_detail")
+    public List<OrderDetail> getAllOrderDetail() { return orderDetailRepository.findAll(); }
+
+//    @GetMapping("/order_detail/{id}")
+//    public ResponseEntity<?> getOrderDetailByOrderId(@PathVariable(value = "id") Long Id) {
+//        Optional<OrderDetail> orderDetails = orderDetailRepository.findByOrderId(Id);
+//        return ResponseEntity.ok().body(orderDetails);
+//    }
 }
 
