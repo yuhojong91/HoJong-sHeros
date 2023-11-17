@@ -74,5 +74,5 @@ package com.example.HoJongs.Heros.model;
      public void setCustomer(Customer customer) { this.customer = customer; }
 
      public Employee getEmployee() { return employee; }
-    public void setEmployee(Employee employee) { this.employee = employee; }
+     public void setEmployee(Employee employee) { this.employee = employee; }
  }

@@ -35,7 +35,6 @@ public class CustomerOrderController {
             Customer customer = customerRepository.findByPhoneNumber(phoneNumber) // Then find fk in customer using phoneNumber
                     .orElseThrow(() -> new EntityNotFoundException("Customer not found with phone number: " + phoneNumber)); // throw error
 
-            System.out.println("Reached ");
 
             customerOrder.setCustomer(customer); // Set the customer
             CustomerOrder newCustomerOrder = customerOrderRepository.save(customerOrder);

@@ -1,9 +1,9 @@
 package com.example.HoJongs.Heros.controller;
 
 
-import com.example.HoJongs.Heros.model.CustomerOrder;
 import com.example.HoJongs.Heros.model.OrderDetail;
 import com.example.HoJongs.Heros.model.Product;
+import com.example.HoJongs.Heros.model.CustomerOrder;
 import com.example.HoJongs.Heros.repository.CustomerOrderRepository;
 import com.example.HoJongs.Heros.repository.OrderDetailRepository;
 import com.example.HoJongs.Heros.repository.ProductRepository;
@@ -11,58 +11,49 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 public class OrderDetailController {
-//    @Autowired
-//    private ProductRepository productRepository; //Inject EmployeeRepository
-    @Autowired
-    private CustomerOrderRepository customerOrderRepository; //Inject CustomerOrderRepository
-    @Autowired
-    private OrderDetailRepository orderDetailRepository;
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private CustomerOrderRepository customerOrderRepository;
+    @Autowired
+    private OrderDetailRepository orderDetailRepository;
 
-    // <?> return type to allow for different body types (either OrderDetail or an error message).
+
     @PostMapping("/order_detail")
     public ResponseEntity<?> createOrderDetail(@RequestBody OrderDetail orderDetail) {
         try {
-            Long customerOrderId = orderDetail.getOrderId();
-            CustomerOrder customerOrder = customerOrderRepository.getReferenceById(customerOrderId); // Extract CustomerOrder affiliated with order detail
-            orderDetail.setOrder(customerOrder); // Set Order in orderDetail to affiliated order
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
-        try {
+            Long orderId = orderDetail.getOrderId(); // Fetch ID for both related objects
             Long productId = orderDetail.getProductId();
-            Product product = productRepository.getReferenceById(productId); // Extract Product affiliated with order detail
-            orderDetail.setProduct(product); // set Product in orderDetail to affiliated product
+
+            CustomerOrder customerOrder = customerOrderRepository.findById(orderId)
+                    .orElseThrow(() -> new EntityNotFoundException("Order not found with ID: " + orderId));
+            Product product = productRepository.findById(productId)
+                    .orElseThrow(() -> new EntityNotFoundException("Product not found with ID: " + productId));
+
+            orderDetail.setOrder(customerOrder);
+            orderDetail.setProduct(product);
+            orderDetail.setPrice(0.0);
+
+            System.out.println(product);
+            System.out.println(orderDetail.getProduct());
+
+            OrderDetail newOrderDetail = orderDetailRepository.save(orderDetail);
+            return ResponseEntity.ok().body(newOrderDetail); // return saved customer
         } catch (EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
-        Double priceTotal = Double.parseDouble(String.format("%.2g%n", orderDetail.getQuantity().doubleValue() * orderDetail.getProduct().getPrice() * (1 - orderDetail.getDiscount())));
-        orderDetail.setPrice(priceTotal); // generate price from product and quantity
-        CustomerOrder order = orderDetail.getOrder();
-        order.setTotalPrice(order.getTotalPrice() + orderDetail.getPrice());
-        customerOrderRepository.save(order);
-        OrderDetail newOrderDetail = orderDetailRepository.save(orderDetail); // save orderDetail to repository
-        return ResponseEntity.ok().body(newOrderDetail);
-    }
-
-    @GetMapping("/order_detail")
-    public ResponseEntity<?> fetchOrderDetails() {
-        List<OrderDetail> orderDetails = orderDetailRepository.findAll();
-        return ResponseEntity.ok().body(orderDetails);
-    }
-
-    @GetMapping("/order_detail/{id}")
-    public ResponseEntity<?> fetchOrderDetailByOrder(@PathVariable("id") Long customerOrderId) {
-        Optional<CustomerOrder> orderDetails = orderDetailRepository.findByOrderId(customerOrderId);
-        return ResponseEntity.ok().body(orderDetails);
     }
 }
+

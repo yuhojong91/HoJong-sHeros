@@ -24,7 +24,8 @@
      @ManyToOne
      @JoinColumn(name = "productId", referencedColumnName = "Id")
      private Product product;
-     public OrderDetail(){
+
+     public OrderDetail() {
      }
 
      public OrderDetail(BigInteger quantity, double discount, Long orderId, Long productId) {
