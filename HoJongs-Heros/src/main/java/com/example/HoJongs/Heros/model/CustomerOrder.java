@@ -38,30 +38,23 @@ package com.example.HoJongs.Heros.model;
          this.employeeId = employeeId;
      }
 
-    public Long getEmployeeId() { return employeeId; }
+     public Long getId() {
+         return Id;
+     }
 
      public String getPhoneNumber() {
          return phoneNumber;
      }
+     public void setPhoneNumber(String phoneNumber) {
+         this.phoneNumber = phoneNumber;
+     }
 
-    public Long getId() {
-        return Id;
-    }
-
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-
-    public String getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(String dateTime) {
-        this.dateTime = dateTime;
-    }
-
+     public String getDateTime() {
+         return dateTime;
+     }
+     public void setDateTime(String dateTime) {
+         this.dateTime = dateTime;
+     }
 
      public Double getTotalPrice() {
          if (totalPrice == null) {
@@ -72,16 +65,14 @@ package com.example.HoJongs.Heros.model;
          }
 
      }
+     public void setTotalPrice(Double totalPrice) { this.totalPrice = totalPrice; }
 
-     public void setTotalPrice(Double totalPrice) {
-         this.totalPrice = totalPrice;
-     }
+     public Long getEmployeeId() { return employeeId; }
+     public void setEmployeeId(Long employeeId) { this.employeeId = employeeId; }
 
-     public void setCustomer(Customer customer) {
-         this.customer = customer;
-     }
+     public Customer getCustomer() { return customer; }
+     public void setCustomer(Customer customer) { this.customer = customer; }
 
-    public void setEmployee(Employee employee) {
-         this.employee = employee;
-     }
+     public Employee getEmployee() { return employee; }
+    public void setEmployee(Employee employee) { this.employee = employee; }
  }
