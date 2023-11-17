@@ -20,9 +20,6 @@ package com.example.HoJongs.Heros.model;
      @ManyToOne
      @JoinColumn(name = "customer_id", referencedColumnName = "Id")
      private Customer customer;
-
-     @OneToMany(mappedBy = "order")
-     private Set<OrderDetail> orderDetails;
    
      @ManyToOne
      @JoinColumn(name = "employeeId", referencedColumnName = "Id")
