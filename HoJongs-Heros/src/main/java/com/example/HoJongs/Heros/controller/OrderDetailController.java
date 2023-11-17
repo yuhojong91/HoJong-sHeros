@@ -61,7 +61,7 @@ public class OrderDetailController {
 
 //    @GetMapping("/order_detail/{id}")
 //    public ResponseEntity<?> getOrderDetailByOrderId(@PathVariable(value = "id") Long Id) {
-//        Optional<OrderDetail> orderDetails = orderDetailRepository.findByOrderId(Id);
+//        Optional<OrderDetail> orderDetails = orderDetailRepository.findAll();
 //        return ResponseEntity.ok().body(orderDetails);
 //    }
 }

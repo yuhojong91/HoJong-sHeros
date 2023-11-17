@@ -40,7 +40,6 @@ public class EmployeeController {
     public ResponseEntity<Employee> getEmployee(@RequestBody Employee employee) {
         var newEmployee= employeeRepository.save(employee);
         return ResponseEntity.ok().body(newEmployee);
- 
     }
 }
 

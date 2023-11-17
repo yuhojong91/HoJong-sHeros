@@ -1,9 +1,5 @@
 package com.example.HoJongs.Heros.model;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.util.Set;
 
@@ -12,6 +8,7 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Id;
+    @Column(unique=true)
     private String phoneNumber;
     private String name;
     private String address;
@@ -32,9 +29,8 @@ public class Customer {
         this.state = state;
         this.zipCode = zipCode;
     }
-
-    public String getId() {
-        return phoneNumber;
+    public Integer getId() {
+        return Id;
     }
 
     public String getPhoneNumber() {
