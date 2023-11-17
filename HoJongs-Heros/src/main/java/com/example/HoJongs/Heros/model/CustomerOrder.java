@@ -1,12 +1,10 @@
- package com.example.HoJongs.Heros.model;
+package com.example.HoJongs.Heros.model;
 
- import jakarta.persistence.Entity;
- import jakarta.persistence.Id;
- import jakarta.persistence.JoinColumn;
- import jakarta.persistence.ManyToOne;
- import jakarta.persistence.GeneratedValue;
- import jakarta.persistence.GenerationType;
+ import jakarta.persistence.*;
+
  import java.time.LocalDateTime;
+ import java.util.Set;
+
  @Entity
  public class CustomerOrder {
      @Id
@@ -14,23 +12,27 @@
      private Long Id;
      private String phoneNumber;
      private String dateTime;
-     private String totalPrice;
+     private Double totalPrice;
+     @Column(insertable=false, updatable=false)
+     private Long employeeId;
      //@JoinColumn in @ManyToOne specifies the column used for joining to the referenced entity.
      //ReferencedColumnName tells Hibernate that this fk column is referring to the 'Id' columnn in the 'Customer' table
      @ManyToOne
      @JoinColumn(name = "customer_id", referencedColumnName = "Id")
      private Customer customer;
-
-//     @ManyToOne
-//     @JoinColumn(name = "employee_id")
-//     private Employee employee;
+   
+     @ManyToOne
+     @JoinColumn(name = "employeeId", referencedColumnName = "Id")
+     private Employee employee;
 
      public CustomerOrder(){
      }
-     public CustomerOrder(String phoneNumber, String dateTime, String totalPrice) {
+   
+     public CustomerOrder(String phoneNumber, String dateTime, Long employeeId) {
          this.phoneNumber = phoneNumber;
          this.dateTime = dateTime;
-         this.totalPrice = totalPrice;
+         this.totalPrice = 0.;
+         this.employeeId = employeeId;
      }
 
      public Long getId() {
@@ -40,7 +42,6 @@
      public String getPhoneNumber() {
          return phoneNumber;
      }
-
      public void setPhoneNumber(String phoneNumber) {
          this.phoneNumber = phoneNumber;
      }
@@ -48,20 +49,27 @@
      public String getDateTime() {
          return dateTime;
      }
-
      public void setDateTime(String dateTime) {
          this.dateTime = dateTime;
      }
 
-     public String getTotalPrice() {
-         return totalPrice;
-     }
+     public Double getTotalPrice() {
+         if (totalPrice == null) {
+             return 0.;
+         }
+         else {
+             return totalPrice;
+         }
 
-     public void setTotalPrice(String totalPrice) {
-         this.totalPrice = totalPrice;
      }
+     public void setTotalPrice(Double totalPrice) { this.totalPrice = totalPrice; }
 
-     public void setCustomer(Customer customer) {
-         this.customer = customer;
-     }
+     public Long getEmployeeId() { return employeeId; }
+     public void setEmployeeId(Long employeeId) { this.employeeId = employeeId; }
+
+     public Customer getCustomer() { return customer; }
+     public void setCustomer(Customer customer) { this.customer = customer; }
+
+     public Employee getEmployee() { return employee; }
+    public void setEmployee(Employee employee) { this.employee = employee; }
  }
