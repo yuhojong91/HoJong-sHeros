@@ -64,7 +64,7 @@ public class OrderDetailController {
     public ResponseEntity<?> getAllOrderDetail(@PathVariable Long Id) {
         try{
             OrderDetail exsitingOrder = orderDetailRepository.findByOrderId(Id)
-                    .orElseThrow(() -> new EntityNotFoundException("Order is not exist: " + Id));
+                    .orElseThrow(() -> new EntityNotFoundException("No order for you!! Order does not exist: " + Id));
             return ResponseEntity.ok().body(exsitingOrder);
         }catch(EntityNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
