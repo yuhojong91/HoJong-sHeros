@@ -24,7 +24,7 @@ public class CustomerOrderController {
     private EmployeeRepository employeeRepository;
 
     // <?> return type to allow for different body types (either CustomerOrder or an error message).
-    @PostMapping("/customer_order")
+    @PostMapping("/create_order")
     public ResponseEntity<?> createCustomerOrder(@RequestBody CustomerOrder customerOrder) {
         try {
             String phoneNumber = customerOrder.getPhoneNumber(); // Extract phoneNumber from the CustomerOrder object

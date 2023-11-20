@@ -1,6 +1,7 @@
 package com.example.HoJongs.Heros.controller;
 
 
+import com.example.HoJongs.Heros.model.Customer;
 import com.example.HoJongs.Heros.model.OrderDetail;
 import com.example.HoJongs.Heros.model.Product;
 import com.example.HoJongs.Heros.model.CustomerOrder;
@@ -28,7 +29,7 @@ public class OrderDetailController {
     private OrderDetailRepository orderDetailRepository;
 
 
-    @PostMapping("/order_detail")
+    @PostMapping("/add_order")
     public ResponseEntity<?> createOrderDetail(@RequestBody OrderDetail orderDetail) {
         try {
             Long orderId = orderDetail.getOrderId(); // Fetch ID for both related objects
@@ -56,13 +57,19 @@ public class OrderDetailController {
         }
     }
 
-    @GetMapping("/order_detail")
+    @GetMapping("/view_all_order")
     public List<OrderDetail> getAllOrderDetail() { return orderDetailRepository.findAll(); }
 
-//    @GetMapping("/order_detail/{id}")
-//    public ResponseEntity<?> getOrderDetailByOrderId(@PathVariable(value = "id") Long Id) {
-//        Optional<OrderDetail> orderDetails = orderDetailRepository.findAll();
-//        return ResponseEntity.ok().body(orderDetails);
-//    }
-}
+    @GetMapping("/view_one_order/{Id}")
+    public ResponseEntity<?> getAllOrderDetail(@PathVariable Long Id) {
+        try{
+            OrderDetail exsitingOrder = orderDetailRepository.findByOrderId(Id)
+                    .orElseThrow(() -> new EntityNotFoundException("Order is not exist: " + Id));
+            return ResponseEntity.ok().body(exsitingOrder);
+        }catch(EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+    }
+
 

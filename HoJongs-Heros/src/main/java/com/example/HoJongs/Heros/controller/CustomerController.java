@@ -9,6 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
+import java.util.Optional;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 
@@ -24,21 +27,16 @@ public class CustomerController {
     private CustomerRepository customerRepository;
 
     @PostMapping("/add_customer")
-    public ResponseEntity<Customer> getCarForId(@RequestBody Customer customer) {
-
-    var newCustomer = customerRepository.save(customer);
-    return ResponseEntity.ok().body(newCustomer);
+    public ResponseEntity<?> getCarForId(@RequestBody Customer customer) {
+        // optional is used to represent a value that is either there or not there, essentially wrapping around another object.
+        Optional<Customer> existingCustomer = customerRepository.findByPhoneNumber(customer.getPhoneNumber());
+        if (existingCustomer.isPresent()){ // isPresent is part of Optional method that returns true if it's value contains a non-null value
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("A customer with phone number " + customer.getPhoneNumber() + " already exist. Please register this customer");
+        }
+        var newCustomer = customerRepository.save(customer);
+        return ResponseEntity.ok().body(newCustomer);
     }
-//    @GetMapping("/get_customer")
-//    public ResponseEntity<Customer> getCustomer(@RequestParam String phoneNumber){
-//        try{
-//            Customer customer = customerRepository.findByPhoneNumber(phoneNumber)
-//                    .orElseThrow(() -> new EntityNotFoundException("Customer not found with phone number: " + phoneNumber));
-//            return ResponseEntity.ok().body(customer);
-//        }catch (EntityNotFoundException e){
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-//        }
-//    }
+
     @GetMapping("/get_customer/{phoneNumber}")
     public ResponseEntity<?> getCustomer(@PathVariable String phoneNumber){
         try{

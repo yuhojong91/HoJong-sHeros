@@ -11,7 +11,7 @@ package com.example.HoJongs.Heros.model;
      @GeneratedValue(strategy = GenerationType.IDENTITY)
      private Long Id;
      private String phoneNumber;
-     private String dateTime;
+     private LocalDateTime dateTime;
      private Double totalPrice;
      @Column(insertable=false, updatable=false)
      private Long employeeId;
@@ -28,7 +28,7 @@ package com.example.HoJongs.Heros.model;
      public CustomerOrder(){
      }
    
-     public CustomerOrder(String phoneNumber, String dateTime, Long employeeId) {
+     public CustomerOrder(String phoneNumber, LocalDateTime dateTime, Long employeeId) {
          this.phoneNumber = phoneNumber;
          this.dateTime = dateTime;
          this.totalPrice = 0.;
@@ -46,11 +46,8 @@ package com.example.HoJongs.Heros.model;
          this.phoneNumber = phoneNumber;
      }
 
-     public String getDateTime() {
+     public LocalDateTime getDateTime() {
          return dateTime;
-     }
-     public void setDateTime(String dateTime) {
-         this.dateTime = dateTime;
      }
 
      public Double getTotalPrice() {
@@ -72,4 +69,8 @@ package com.example.HoJongs.Heros.model;
 
      public Employee getEmployee() { return employee; }
      public void setEmployee(Employee employee) { this.employee = employee; }
+     @PrePersist
+     private void prePersist(){
+         dateTime = LocalDateTime.now(); // Set the current time just before save it
+     }
  }
