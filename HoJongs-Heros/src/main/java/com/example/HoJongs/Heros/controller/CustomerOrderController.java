@@ -1,6 +1,10 @@
 package com.example.HoJongs.Heros.controller;
 
-import java.util.Optional;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
+import java.util.List;
+
 import com.example.HoJongs.Heros.model.Customer;
 import com.example.HoJongs.Heros.model.CustomerOrder;
 import com.example.HoJongs.Heros.model.Employee;
@@ -9,6 +13,7 @@ import com.example.HoJongs.Heros.repository.CustomerOrderRepository;
 import com.example.HoJongs.Heros.repository.CustomerRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +27,19 @@ public class CustomerOrderController {
     private CustomerOrderRepository customerOrderRepository;
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @GetMapping("orders/{zipCode}/week")
+    public ResponseEntity<?> getOrderByZipCodeAndWeek(
+            @PathVariable String zipCode, @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate date){
+            LocalDate startOfWeek = date.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+            LocalDate endOfWeek = date.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
+
+            List<CustomerOrder> orders = customerOrderRepository.findByCustomer_ZipCodeAndDateTimeBetween(
+                    zipCode, startOfWeek, endOfWeek);
+
+            return ResponseEntity.ok().body(orders);
+    }
+
 
     // <?> return type to allow for different body types (either CustomerOrder or an error message).
     @PostMapping("/create_order")

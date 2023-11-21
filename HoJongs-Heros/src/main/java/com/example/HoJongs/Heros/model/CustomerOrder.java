@@ -2,8 +2,7 @@ package com.example.HoJongs.Heros.model;
 
  import jakarta.persistence.*;
 
- import java.time.LocalDateTime;
- import java.util.Set;
+ import java.time.LocalDate;
 
  @Entity
  public class CustomerOrder {
@@ -11,7 +10,7 @@ package com.example.HoJongs.Heros.model;
      @GeneratedValue(strategy = GenerationType.IDENTITY)
      private Long Id;
      private String phoneNumber;
-     private LocalDateTime dateTime;
+     private LocalDate dateTime;
      private Double totalPrice;
      @Column(insertable=false, updatable=false)
      private Long employeeId;
@@ -28,7 +27,7 @@ package com.example.HoJongs.Heros.model;
      public CustomerOrder(){
      }
    
-     public CustomerOrder(String phoneNumber, LocalDateTime dateTime, Long employeeId) {
+     public CustomerOrder(String phoneNumber, LocalDate dateTime, Long employeeId) {
          this.phoneNumber = phoneNumber;
          this.dateTime = dateTime;
          this.totalPrice = 0.;
@@ -46,7 +45,7 @@ package com.example.HoJongs.Heros.model;
          this.phoneNumber = phoneNumber;
      }
 
-     public LocalDateTime getDateTime() {
+     public LocalDate getDateTime() {
          return dateTime;
      }
 
@@ -71,6 +70,6 @@ package com.example.HoJongs.Heros.model;
      public void setEmployee(Employee employee) { this.employee = employee; }
      @PrePersist
      private void prePersist(){
-         dateTime = LocalDateTime.now(); // Set the current time just before save it
+         dateTime = LocalDate.now(); // Set the current time just before save it
      }
  }

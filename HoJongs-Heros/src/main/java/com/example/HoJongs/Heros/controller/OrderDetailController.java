@@ -1,10 +1,9 @@
 package com.example.HoJongs.Heros.controller;
 
 
-import com.example.HoJongs.Heros.model.Customer;
+import com.example.HoJongs.Heros.model.CustomerOrder;
 import com.example.HoJongs.Heros.model.OrderDetail;
 import com.example.HoJongs.Heros.model.Product;
-import com.example.HoJongs.Heros.model.CustomerOrder;
 import com.example.HoJongs.Heros.repository.CustomerOrderRepository;
 import com.example.HoJongs.Heros.repository.OrderDetailRepository;
 import com.example.HoJongs.Heros.repository.ProductRepository;
@@ -15,8 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Function;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
@@ -62,14 +59,12 @@ public class OrderDetailController {
 
     @GetMapping("/view_one_order/{Id}")
     public ResponseEntity<?> getAllOrderDetail(@PathVariable Long Id) {
-        try{
-            OrderDetail exsitingOrder = orderDetailRepository.findByOrderId(Id)
-                    .orElseThrow(() -> new EntityNotFoundException("No order for you!! Order does not exist: " + Id));
-            return ResponseEntity.ok().body(exsitingOrder);
-        }catch(EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        List<OrderDetail> orderDetails = orderDetailRepository.findByOrderId(Id);
+        if (orderDetails.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No order details found for order ID: " + Id);
         }
+        return ResponseEntity.ok().body(orderDetails);
     }
-    }
+}
 
 
